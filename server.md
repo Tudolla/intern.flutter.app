@@ -1,0 +1,13 @@
+# Server 
+# npm package : http , express, mongoose , nodemon , bcryptjs(ma hoa Password - Secure)
+
+# mk MONGODB : admin - admin 
+
+# AT node : để host là 0.0.0.0 thay vì localhost sẽ giúp mọi thiết bị có thể kết nối , còn localhost chỉ kết nối với máy cục bộ 
+
+# AT signup : mk se duoc ma hoa , su dung bcryptjs 
+
+# Thêm http vào Dart Package - cho phep lay API request from URL server
+
+# Tim hieu them ve Provider + SharedPreference 
+# Truoc khi get data , chung ta se get token su dung share prefre , lay string boi x-auth-token đã được stored . Phut 3:05 khá khó hiểu ( có lẽ về get User function)
