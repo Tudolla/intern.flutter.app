@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:intern_app/common/widgets/bottom_bar.dart';
 import 'package:intern_app/constants/error_variables.dart';
 import 'package:intern_app/constants/utils.dart';
 import 'package:intern_app/home/screens/home_screen.dart';
@@ -85,7 +86,7 @@ class AuthService {
           // set the token
           await prefs.setString('x-auth-token', jsonDecode(res.body)['token']);
           Navigator.pushNamedAndRemoveUntil(
-              context, HomeScreen.routeName, (route) => false);
+              context, BottomBar.routeName, (route) => false);
         },
       );
     } catch (e) {
@@ -96,38 +97,36 @@ class AuthService {
 // get User
   void getUserData({
     required BuildContext context,
-    required String email,
-    required String password,
   }) async {
     try {
-      // uri lay tu global_variable.dart
-      // http.Response res = await http.post(
-      //   Uri.parse('$uri/api/signin'),
-      //   body: jsonEncode({
-      //     'email': email,
-      //     'password': password,
-      //   }),
-      //   headers: <String, String>{
-      //     'Content-Type': 'application/json; charset=UTF-8',
-      //   },
-      // );
-      // print(res.body);
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String? token = prefs.getString('x-auth-token');
 
-      // httpErrorHandle(
-      //   response: res,
-      //   context: context,
-      //   onSuccess: () async {
-      //     // lay instance
-      //     SharedPreferences prefs = await SharedPreferences.getInstance();
-      //     // save data
-      //     Provider.of<UserProvider>(context, listen: false).setUser(res.body);
+      if (token == null) {
+        prefs.setString('x-auth-token', '');
+      }
 
-      //     // set the token
-      //     await prefs.setString('x-auth-token', jsonDecode(res.body)['token']);
-      //     Navigator.pushNamedAndRemoveUntil(
-      //         context, HomeScreen.routeName, (route) => false);
-      //   },
-      // );
+      var tokenRes = await http.post(
+        Uri.parse('$uri/tokenIsValid'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'x-auth-token': token!
+        },
+      );
+      var response = jsonDecode(tokenRes.body);
+      if (response == true) {
+        // get user data
+        http.Response userRes = await http.get(
+          Uri.parse('$uri/'),
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+            'x-auth-token': token
+          },
+        );
+
+        var userProvider = Provider.of<UserProvider>(context, listen: false);
+        userProvider.setUser(userRes.body);
+      }
     } catch (e) {
       showSnackBar(context, e.toString());
     }
