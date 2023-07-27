@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intern_app/constants/global_variables.dart';
+import 'package:intern_app/features/admin/screens/post_screen.dart';
+import 'package:badges/badges.dart' as badges;
 
 class AdminScreen extends StatefulWidget {
   const AdminScreen({super.key});
@@ -9,11 +11,31 @@ class AdminScreen extends StatefulWidget {
 }
 
 class _AdminScreenState extends State<AdminScreen> {
+  int _page = 0;
+  double bottomBarWidth = 42;
+  double bottomBarBorderWidth = 5;
+
+  List<Widget> pages = [
+    const PostsScreen(),
+    const Center(
+      child: Text('Analytics'),
+    ),
+    const Center(
+      child: Text('Carrd'),
+    ),
+  ];
+
+  void updatePage(int page) {
+    setState(() {
+      _page = page;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(80),
+        preferredSize: const Size.fromHeight(60),
         child: AppBar(
           flexibleSpace: Container(
             decoration: const BoxDecoration(
@@ -32,21 +54,83 @@ class _AdminScreenState extends State<AdminScreen> {
                   color: Colors.black,
                 ),
               ),
-              Container(
-                padding: const EdgeInsets.only(left: 35, right: 15),
-                child: Row(
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.only(right: 15),
-                      child: Icon(Icons.notifications_outlined),
-                    ),
-                    Icon(Icons.search),
-                  ],
-                ),
-              )
+              const Text('Admin',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                  ))
             ],
           ),
         ),
+      ),
+      body: pages[_page],
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _page,
+        selectedItemColor: GlobalVariables.selectedNavBarColor,
+        unselectedItemColor: GlobalVariables.unselectedNavBarColor,
+        backgroundColor: GlobalVariables.backgroundColor,
+        iconSize: 28,
+        onTap: updatePage,
+        items: [
+          //POST
+          BottomNavigationBarItem(
+            icon: Container(
+              width: bottomBarWidth,
+              decoration: BoxDecoration(
+                border: Border(
+                  top: BorderSide(
+                    color: _page == 0
+                        ? GlobalVariables.selectedNavBarColor
+                        : GlobalVariables.backgroundColor,
+                    width: bottomBarBorderWidth,
+                  ),
+                ),
+              ),
+              child: badges.Badge(
+                child: const Icon(Icons.home),
+                badgeStyle: badges.BadgeStyle(badgeColor: Colors.white),
+                showBadge: true,
+              ),
+            ),
+            label: '',
+          ),
+          //Analytics
+          BottomNavigationBarItem(
+            icon: Container(
+              width: bottomBarWidth,
+              decoration: BoxDecoration(
+                border: Border(
+                  top: BorderSide(
+                    color: _page == 1
+                        ? GlobalVariables.selectedNavBarColor
+                        : GlobalVariables.backgroundColor,
+                    width: bottomBarBorderWidth,
+                  ),
+                ),
+              ),
+              child: const Icon(Icons.analytics),
+            ),
+            label: '',
+          ),
+          //Orders
+          BottomNavigationBarItem(
+            icon: Container(
+              width: bottomBarWidth,
+              decoration: BoxDecoration(
+                border: Border(
+                  top: BorderSide(
+                    color: _page == 2
+                        ? GlobalVariables.selectedNavBarColor
+                        : GlobalVariables.backgroundColor,
+                    width: bottomBarBorderWidth,
+                  ),
+                ),
+              ),
+              child: const Icon(Icons.all_inbox_outlined),
+            ),
+            label: '',
+          ),
+        ],
       ),
     );
   }
