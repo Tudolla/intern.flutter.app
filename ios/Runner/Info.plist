@@ -47,5 +47,8 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+
+	<key>NSAppleMusicUsageDescription</key>
+<string>We want images for show product.</string>
 </dict>
 </plist>
