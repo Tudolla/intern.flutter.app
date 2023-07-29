@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const {productSchema} = require("./product");
 
 const userSchema = mongoose.Schema({
     name:{
@@ -15,7 +16,7 @@ const userSchema = mongoose.Schema({
                 const re = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
                 return value.match(re);
             },
-            message: "Please! Enter valid emai.",
+            message: "Please! Enter valid email.",
 
 
         },

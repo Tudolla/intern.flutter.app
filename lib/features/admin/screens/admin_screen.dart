@@ -86,10 +86,8 @@ class _AdminScreenState extends State<AdminScreen> {
                   ),
                 ),
               ),
-              child: badges.Badge(
-                child: const Icon(Icons.home),
-                badgeStyle: badges.BadgeStyle(badgeColor: Colors.white),
-                showBadge: true,
+              child: const Icon(
+                Icons.home_outlined,
               ),
             ),
             label: '',

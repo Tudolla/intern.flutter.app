@@ -16,3 +16,5 @@
 # upload product to Database : this can be in server side but it more difficult . So do it in client side easiler 
 
 # Ko nen luu anh tren MongoDB vi MongoDB chi cho luu tru 512MB +> su dung Cloudinary + cloudinary_pulic libary Flutter
+
+# check loi dang nhap ko chinh xac

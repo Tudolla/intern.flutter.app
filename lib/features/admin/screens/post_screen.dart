@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intern_app/features/admin/screens/add_product_screen.dart';
+import 'package:intern_app/features/admin/services/admin_services.dart';
+import 'package:intern_app/models/product.dart';
 
 class PostsScreen extends StatefulWidget {
   const PostsScreen({super.key});
@@ -9,6 +11,9 @@ class PostsScreen extends StatefulWidget {
 }
 
 class _PostsScreenState extends State<PostsScreen> {
+  List<Product>? products;
+  final AdminServices adminServices = AdminServices();
+
   void navigateToAddProduct() {
     Navigator.pushNamed(context, AddProductScreen.routeName);
   }
@@ -16,7 +21,7 @@ class _PostsScreenState extends State<PostsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
+      body: const Center(
         child: Text('Products'),
       ),
       floatingActionButton: FloatingActionButton(

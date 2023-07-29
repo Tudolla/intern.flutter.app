@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:intern_app/common/widgets/bottom_bar.dart';
-import 'package:intern_app/constants/error_variables.dart';
+import 'package:intern_app/constants/error_handling.dart';
 import 'package:intern_app/constants/utils.dart';
 import 'package:intern_app/home/screens/home_screen.dart';
 import 'package:intern_app/models/user.dart';
@@ -24,8 +24,8 @@ class AuthService {
       User user = User(
         id: '',
         name: name,
-        email: email,
         password: password,
+        email: email,
         address: '',
         type: '',
         token: '',
@@ -86,7 +86,10 @@ class AuthService {
           // set the token
           await prefs.setString('x-auth-token', jsonDecode(res.body)['token']);
           Navigator.pushNamedAndRemoveUntil(
-              context, BottomBar.routeName, (route) => false);
+            context,
+            BottomBar.routeName,
+            (route) => false,
+          );
         },
       );
     } catch (e) {
@@ -95,9 +98,9 @@ class AuthService {
   }
 
 // get User
-  void getUserData({
-    required BuildContext context,
-  }) async {
+  void getUserData(
+    BuildContext context,
+  ) async {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String? token = prefs.getString('x-auth-token');

@@ -4,6 +4,7 @@ const cors = require('cors');
 
 const app = express();
 const authRouter = require('./routes/auth');
+const adminRouter = require('./routes/admin');
 const PORT = 3000; 
 const DB = 'mongodb+srv://admin:admin@cluster0.nlf37up.mongodb.net/?retryWrites=true&w=majority'
 
@@ -11,9 +12,10 @@ const DB = 'mongodb+srv://admin:admin@cluster0.nlf37up.mongodb.net/?retryWrites=
 app.use(cors());
 app.use(express.json()); // return json payload
 app.use(authRouter);
+app.use(adminRouter);
 
 mongoose.connect(DB).then(()=>{
-    console.log('Connected!');
+    console.log('Connected Successfully OKE!');
 }
 
 ).catch((e)=>{
@@ -23,5 +25,5 @@ mongoose.connect(DB).then(()=>{
 
 // 0.0.0.0 can use to any IP address outside server 
 app.listen(PORT, "0.0.0.0",() =>{
-    console.log(`Listen ${PORT}`);
+    console.log(`Listening at ${PORT}`);
 })
